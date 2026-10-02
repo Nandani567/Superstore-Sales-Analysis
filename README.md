@@ -48,10 +48,10 @@ The goal is to turn raw order data into clear, decision-ready insights for sales
 
 | Property       | Details                                  |
 | -------------- | ---------------------------------------- |
-| Name           | Superstore Sales Dataset (train.csv)     |
-| Source         | [Add Kaggle / source link]               |
-| Rows × Columns | [add from df.shape]                      |
-| Period         | [add, e.g. 2015 – 2018]                  |
+| Name           | train.csv   |
+| Source         | https://www.kaggle.com/datasets/rohitsahoo/sales-forecasting               |
+| Rows × Columns | 9800, 18                   |
+| Period         | 2015 – 2018            |
 | Granularity    | One row per product line within an order |
 
 **Key columns:**
