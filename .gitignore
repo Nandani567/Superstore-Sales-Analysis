@@ -1,0 +1,16 @@
+# Power BI temporary files
+~$*
+*.tmp
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment files
+.env
+
+# VS Code
+.vscode/
