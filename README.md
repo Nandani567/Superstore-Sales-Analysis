@@ -1,91 +1,103 @@
-Superstore Sales Analysis
+# Superstore Sales Analysis
 
 End-to-end sales analysis of a US retail store using Python (Pandas, Matplotlib, Seaborn), SQL and Power BI. The project cleans the raw data, answers 13 business questions on products, customers, geography, shipping and seasonality, and presents the results in an interactive dashboard.
 
-📌 Table of Contents
-Project Overview
-Business Questions
-Dataset
-Tools & Technologies
-Data Cleaning & Preparation
-Analysis & Code Highlights
-Visualizations
-Power BI Dashboard
-Key Insights
-Recommendations
-Retail Analytics Concepts
-Project Structure
-How to Run
-Limitations & Future Work
-Author
+## 📌 Table of Contents
 
-📖 Project Overview
+* Project Overview
+* Business Questions
+* Dataset
+* Tools & Technologies
+* Data Cleaning & Preparation
+* Analysis & Code Highlights
+* Visualizations
+* Power BI Dashboard
+* Key Insights
+* Recommendations
+* Retail Analytics Concepts
+* Project Structure
+* How to Run
+* Limitations & Future Work
+* Author
+
+## 📖 Project Overview
 
 Superstore sells Furniture, Office Supplies and Technology products to consumers, corporates and home offices across the United States. This project explores which products, categories, cities and customer groups drive revenue, how shipping performance varies, and how sales change over time.
 
 The goal is to turn raw order data into clear, decision-ready insights for sales, operations and marketing teams.
 
-❓ Business Questions
-#	Question	Area
-1	Which cities have the highest sales?	Geography
-2	Which product sold the most in each year?	Product
-3	How do shipping modes compare on delivery delay?	Operations
-4	How much revenue does each customer segment generate?	Customer
-5	What share of revenue comes from the top 10% of customers?	Customer
-6	How many customers ordered only once vs. more than once?	Retention
-7	Do Technology buyers also buy Office Supplies in the same order?	Cross-sell
-8	Which cities/states have many orders but low revenue per order?	Geography
-9	Which category earns the most revenue in each region?	Category
-10	How many states make up 50% or more of total revenue?	Geography
-11	What is the month-over-month growth rate of revenue?	Trend
-12	Which category generated the most sales each year?	Category
-13	Which months have the highest average order volume?	Seasonality
+## ❓ Business Questions
 
+| #  | Question                                                         | Area        |
+| -- | ---------------------------------------------------------------- | ----------- |
+| 1  | Which cities have the highest sales?                             | Geography   |
+| 2  | Which product sold the most in each year?                        | Product     |
+| 3  | How do shipping modes compare on delivery delay?                 | Operations  |
+| 4  | How much revenue does each customer segment generate?            | Customer    |
+| 5  | What share of revenue comes from the top 10% of customers?       | Customer    |
+| 6  | How many customers ordered only once vs. more than once?         | Retention   |
+| 7  | Do Technology buyers also buy Office Supplies in the same order? | Cross-sell  |
+| 8  | Which cities/states have many orders but low revenue per order?  | Geography   |
+| 9  | Which category earns the most revenue in each region?            | Category    |
+| 10 | How many states make up 50% or more of total revenue?            | Geography   |
+| 11 | What is the month-over-month growth rate of revenue?             | Trend       |
+| 12 | Which category generated the most sales each year?               | Category    |
+| 13 | Which months have the highest average order volume?              | Seasonality |
 
-📂 Dataset
-Property	Details
-Name	Superstore Sales Dataset (train.csv)
-Source	[Add Kaggle / source link]
-Rows × Columns	[add from df.shape]
-Period	[add, e.g. 2015 – 2018]
-Granularity	One row per product line within an order
+## 📂 Dataset
 
-# Key columns:
- Order ID, Order Date, Ship Date, Ship Mode, Customer ID, Customer Name, Segment, Country, City, State, Postal Code, Region, Product ID, Category, Sub-Category, Product Name, Sales
+| Property       | Details                                  |
+| -------------- | ---------------------------------------- |
+| Name           | Superstore Sales Dataset (train.csv)     |
+| Source         | [Add Kaggle / source link]               |
+| Rows × Columns | [add from df.shape]                      |
+| Period         | [add, e.g. 2015 – 2018]                  |
+| Granularity    | One row per product line within an order |
 
-🛠 Tools & Technologies
-Tool	                                      Purpose
-Python                          	Data cleaning, analysis, visualization
-SQL	                                Aggregation queries and business questions
-Power BI	                        Interactive dashboard
-Git / GitHub	                    Version control and portfolio hosting
+**Key columns:**
 
+Order ID, Order Date, Ship Date, Ship Mode, Customer ID, Customer Name, Segment, Country, City, State, Postal Code, Region, Product ID, Category, Sub-Category, Product Name, Sales
 
-Data Cleaning & Preparation
+## 🛠 Tools & Technologies
 
-Script: python/main.py
+| Tool         | Purpose                                    |
+| ------------ | ------------------------------------------ |
+| Python       | Data cleaning, analysis, visualization     |
+| SQL          | Aggregation queries and business questions |
+| Power BI     | Interactive dashboard                      |
+| Git / GitHub | Version control and portfolio hosting      |
 
-Step	            What was done
-Inspection	          Checked shape, data types, info(), describe(), missing values and duplicates
-Missing values	      Postal Code was missing for Burlington, Vermont, so it was filled with the correct code (05401)
-Postal code format	  Converted to a 5-character string with leading zeros (zfill(5)) so codes are not treated as numbers
-Dates	              Converted Order Date and Ship Date to datetime (dayfirst=True)
-Column names	      Standardized to lowercase with underscores (e.g. order_date)
-Dropped columns	      Removed row_id (no analytical value)
-Feature engineering	  ship_delay_days, order_year, order_month
-Data types	Converted ship_mode, segment, region, category, sub-category to category for efficiency
-Output	Saved as cleaned_superstore.csv
-python
+## Data Cleaning & Preparation
+
+Script: `python/main.py`
+
+| Step                | What was done                                                                                       |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| Inspection          | Checked shape, data types, info(), describe(), missing values and duplicates                        |
+| Missing values      | Postal Code was missing for Burlington, Vermont, so it was filled with the correct code (05401)     |
+| Postal code format  | Converted to a 5-character string with leading zeros (zfill(5)) so codes are not treated as numbers |
+| Dates               | Converted Order Date and Ship Date to datetime (dayfirst=True)                                      |
+| Column names        | Standardized to lowercase with underscores (e.g. order_date)                                        |
+| Dropped columns     | Removed row_id (no analytical value)                                                                |
+| Feature engineering | ship_delay_days, order_year, order_month                                                            |
+| Data types          | Converted ship_mode, segment, region, category, sub-category to category for efficiency             |
+| Output              | Saved as cleaned_superstore.csv                                                                     |
+
+```python
 data['ship_delay_days'] = (data['ship_date'] - data['order_date']).dt.days
-data['order_year']      = data['order_date'].dt.year
-data['order_month']     = data['order_date'].dt.month_name()
 
-🐍 Analysis & Code Highlights
-Script: python/eda.py
+data['order_year'] = data['order_date'].dt.year
 
-Top cities by sales
+data['order_month'] = data['order_date'].dt.month_name()
+```
 
-python
+## 🐍 Analysis & Code Highlights
+
+Script: `python/eda.py`
+
+### Top cities by sales
+
+```python
 top_cities_sales = (
     df.groupby(['city', 'state'])
       .agg(total_sales=('sales', 'sum'),
@@ -94,97 +106,141 @@ top_cities_sales = (
       .reset_index()
       .sort_values('total_sales', ascending=False)
 )
+```
 
-Revenue concentration: top 10% of customers
+### Revenue concentration: top 10% of customers
 
-python
+```python
 total_rev = df.groupby('customer_id')['sales'].sum().sort_values(ascending=False)
+
 top_10 = total_rev.head(int(len(total_rev) * 0.10))
+
 percentage = top_10.sum() / total_rev.sum() * 100
+```
 
-One-time vs returning customers
+### One-time vs returning customers
 
-python
+```python
 order_frequency = df.groupby('customer_id')['order_id'].nunique()
-one_time  = (order_frequency == 1).sum()
+
+one_time = (order_frequency == 1).sum()
+
 returning = (order_frequency > 1).sum()
+```
 
-Cross-sell: Technology orders that also contain Office Supplies
+### Cross-sell: Technology orders that also contain Office Supplies
 
-python
+```python
 order_categories = df.groupby('order_id')['category'].apply(set)
+
 tech = order_categories.apply(lambda x: 'Technology' in x)
-both = order_categories.apply(lambda x: 'Technology' in x and 'Office Supplies' in x)
+
+both = order_categories.apply(
+    lambda x: 'Technology' in x and 'Office Supplies' in x
+)
+
 percentage = both.sum() / tech.sum() * 100
+```
 
-Month-over-month growth
+### Month-over-month growth
 
-python
+```python
 monthly_revenue = df.groupby(df['order_date'].dt.to_period('M'))['sales'].sum()
+
 mom_growth = monthly_revenue.pct_change() * 100
-SQL examples
+```
 
-sql
+### SQL examples
+
+```sql
 -- Revenue by category and sub-category
-SELECT category, sub_category, ROUND(SUM(sales), 2) AS total_sales
-FROM superstore
-GROUP BY category, sub_category
-ORDER BY total_sales DESC;
 
+SELECT category, sub_category, ROUND(SUM(sales), 2) AS total_sales
+
+FROM superstore
+
+GROUP BY category, sub_category
+
+ORDER BY total_sales DESC;
+```
+
+```sql
 -- Revenue per order by state (high orders, low value)
+
 SELECT state,
        COUNT(DISTINCT order_id) AS total_orders,
        ROUND(SUM(sales) / COUNT(DISTINCT order_id), 2) AS revenue_per_order
-FROM superstore
-GROUP BY state
-ORDER BY revenue_per_order;
 
-📈 Visualizations
+FROM superstore
+
+GROUP BY state
+
+ORDER BY revenue_per_order;
+```
+
+## 📈 Visualizations
 
 Four charts were created with Matplotlib and Seaborn:
 
 ![Sales Performance Dashboard](images/visual.png)
 
-Chart	What it shows	Takeaway
-Top 10 Sub-Categories by Total Sales	Revenue by product group	Phones and Chairs lead, each at roughly $320K+
-Aggregated Monthly Sales (Seasonality)	Total sales per calendar month across all years	Sales peak in November and December and are weakest in February
-Average Shipping Delay per Ship Mode	Days between order and shipping	Standard Class is slowest (about 5 days); Same Day is near 0
-Total Sales by Customer Segment	Revenue by Consumer, Corporate and Home Office	Consumer is the largest segment by a wide margin
+| Chart                                  | What it shows                                   | Takeaway                                                        |
+| -------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------- |
+| Top 10 Sub-Categories by Total Sales   | Revenue by product group                        | Phones and Chairs lead, each at roughly $320K+                  |
+| Aggregated Monthly Sales (Seasonality) | Total sales per calendar month across all years | Sales peak in November and December and are weakest in February |
+| Average Shipping Delay per Ship Mode   | Days between order and shipping                 | Standard Class is slowest (about 5 days); Same Day is near 0    |
+| Total Sales by Customer Segment        | Revenue by Consumer, Corporate and Home Office  | Consumer is the largest segment by a wide margin                |
 
-📊 Power BI Dashboard
+## 📊 Power BI Dashboard
+
 [Open Power BI file](./powerbi/superstore.pbix)
 
 ![Sales Performance Dashboard](./images/power_bi.png)
 
-Dashboard components
+### Dashboard components
 
-Visual	       Purpose
-KPI cards: Total Sales (2.26M), Avg Ship Delay (3.96 days), Total Orders (~5K)	Headline performance at a glance
-Sales Mix by Category (donut)	Share of revenue by Technology, Furniture and Office Supplies
-Category Sales Rank by Region (ribbon chart)	How category rankings change across West, East, Central and South
-Sales by Category and Region (bar chart)	Category revenue compared within each region
-Sales Concentration by State (map)	Where revenue is geographically concentrated
-Sales Contribution by Sub-Category (treemap)	Relative size of each sub-category
+| Visual                                                                         | Purpose                                                           |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| KPI cards: Total Sales (2.26M), Avg Ship Delay (3.96 days), Total Orders (~5K) | Headline performance at a glance                                  |
+| Sales Mix by Category (donut)                                                  | Share of revenue by Technology, Furniture and Office Supplies     |
+| Category Sales Rank by Region (ribbon chart)                                   | How category rankings change across West, East, Central and South |
+| Sales by Category and Region (bar chart)                                       | Category revenue compared within each region                      |
+| Sales Concentration by State (map)                                             | Where revenue is geographically concentrated                      |
+| Sales Contribution by Sub-Category (treemap)                                   | Relative size of each sub-category                                |
 
+## ▶️ How to Run
 
-▶️ How to Run
-Clone the repository
-bash
-   git clone [text](https://github.com/Nandani567/Superstore-Sales-Analysis)
-   cd superstore-analysis
-Install libraries
-bash
-   pip install pandas matplotlib seaborn
-Clean the data (creates cleaned_superstore.csv)
-bash
-   python python/main.py
-Run the analysis and charts
-bash
-   python python/eda.py
-Dashboard: open powerbi/superstore.pbix in Power BI Desktop.
+### Clone the repository
 
+```bash
+git clone https://github.com/Nandani567/Superstore-Sales-Analysis
+cd superstore-analysis
+```
 
+### Install libraries
 
-👤 Author
+```bash
+pip install pandas matplotlib seaborn
+```
 
-Nandani Bansal  Data Analyst | SQL • Python • Power BI  🔗 https://www.linkedin.com/in/nandani-bansal-741920249/ 
+### Clean the data (creates cleaned_superstore.csv)
+
+```bash
+python python/main.py
+```
+
+### Run the analysis and charts
+
+```bash
+python python/eda.py
+```
+
+### Dashboard
+
+Open `powerbi/superstore.pbix` in Power BI Desktop.
+
+## 👤 Author
+
+Nandani Bansal
+Data Analyst | SQL • Python • Power BI
+🔗 https://www.linkedin.com/in/nandani-bansal-741920249/
