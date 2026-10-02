@@ -152,9 +152,9 @@ Average Shipping Delay per Ship Mode	Days between order and shipping	Standard Cl
 Total Sales by Customer Segment	Revenue by Consumer, Corporate and Home Office	Consumer is the largest segment by a wide margin
 
 📊 Power BI Dashboard
+[Open Power BI file](./powerbi/superstore.pbix)
 
-File: powerbi/superstore.pbix
-
+![Sales Performance Dashboard](./images/power_bi.png)
 
 Dashboard components
 
